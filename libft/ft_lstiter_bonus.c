@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelhansa <nelhansa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 20:59:25 by nelhansa          #+#    #+#             */
-/*   Updated: 2025/10/29 14:16:46 by nelhansa         ###   ########.fr       */
+/*   Created: 2025/10/21 21:22:26 by nelhansa          #+#    #+#             */
+/*   Updated: 2025/10/21 23:19:24 by nelhansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	int (numbre), (positive);
-	numbre = 0;
-	positive = 1;
-	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
+	if (!lst || !f)
+		return ;
+	while (lst)
 	{
-		if (*nptr == '-')
-			positive = -positive;
-		nptr++;
+		f(lst->content);
+		lst = lst->next;
 	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		numbre = (numbre * 10) + (*nptr - 48);
-		nptr++;
-	}
-	return (numbre * positive);
 }

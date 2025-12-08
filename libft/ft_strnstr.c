@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelhansa <nelhansa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 20:59:25 by nelhansa          #+#    #+#             */
-/*   Updated: 2025/10/29 14:16:46 by nelhansa         ###   ########.fr       */
+/*   Created: 2025/10/17 17:17:52 by nelhansa          #+#    #+#             */
+/*   Updated: 2025/10/21 19:00:47 by nelhansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int (numbre), (positive);
-	numbre = 0;
-	positive = 1;
-	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (!big || !little)
+		return (NULL);
+	if (!*little)
+		return ((char *)big);
+	while (*(big + i) && i < len)
 	{
-		if (*nptr == '-')
-			positive = -positive;
-		nptr++;
+		j = 0;
+		while (*(little + j) && (i + j) < len
+			&& *(big + i + j) == *(little + j))
+			j++;
+		if (*(little + j) == '\0')
+			return ((char *)(big + i));
+		i++;
 	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		numbre = (numbre * 10) + (*nptr - 48);
-		nptr++;
-	}
-	return (numbre * positive);
+	return (NULL);
 }

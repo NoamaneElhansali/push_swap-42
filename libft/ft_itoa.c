@@ -1,33 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelhansa <nelhansa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 20:59:25 by nelhansa          #+#    #+#             */
-/*   Updated: 2025/10/29 14:16:46 by nelhansa         ###   ########.fr       */
+/*   Created: 2025/10/19 18:11:56 by nelhansa          #+#    #+#             */
+/*   Updated: 2025/10/21 18:52:33 by nelhansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+static int	ft_intlen(long n)
 {
-	int (numbre), (positive);
-	numbre = 0;
-	positive = 1;
-	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
+	int	len;
+
+	len = (n <= 0);
+	while (n)
 	{
-		if (*nptr == '-')
-			positive = -positive;
-		nptr++;
+		len++;
+		n /= 10;
 	}
-	while (*nptr >= '0' && *nptr <= '9')
+	return (len);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*nbr;
+
+	long int (i), (c);
+	c = n;
+	i = ft_intlen(n);
+	nbr = malloc((i + 1) * sizeof(char));
+	if (!nbr)
+		return (NULL);
+	nbr[i--] = '\0';
+	if (n == 0)
+		nbr[0] = '0';
+	if (n < 0)
 	{
-		numbre = (numbre * 10) + (*nptr - 48);
-		nptr++;
+		nbr[0] = '-';
+		c = -c;
 	}
-	return (numbre * positive);
+	while (c > 0)
+	{
+		nbr[i--] = (c % 10) + 48;
+		c /= 10;
+	}
+	return (nbr);
 }

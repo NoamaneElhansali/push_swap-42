@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelhansa <nelhansa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 20:59:25 by nelhansa          #+#    #+#             */
-/*   Updated: 2025/10/29 14:16:46 by nelhansa         ###   ########.fr       */
+/*   Created: 2025/10/17 22:07:01 by nelhansa          #+#    #+#             */
+/*   Updated: 2025/10/21 17:47:26 by nelhansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+char	*ft_strdup(const char *s)
 {
-	int (numbre), (positive);
-	numbre = 0;
-	positive = 1;
-	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
+	char	*str;
+
+	int (len_s), (i);
+	len_s = ft_strlen(s);
+	i = 0;
+	if (!s)
+		return (NULL);
+	str = malloc((len_s + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (i < len_s)
 	{
-		if (*nptr == '-')
-			positive = -positive;
-		nptr++;
+		*(str + i) = *(s + i);
+		i++;
 	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		numbre = (numbre * 10) + (*nptr - 48);
-		nptr++;
-	}
-	return (numbre * positive);
+	*(str + i) = '\0';
+	return (str);
 }

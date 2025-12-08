@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelhansa <nelhansa@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/17 20:59:25 by nelhansa          #+#    #+#             */
-/*   Updated: 2025/10/29 14:16:46 by nelhansa         ###   ########.fr       */
+/*   Created: 2025/10/15 15:53:26 by nelhansa          #+#    #+#             */
+/*   Updated: 2025/10/21 19:06:50 by nelhansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	int (numbre), (positive);
-	numbre = 0;
-	positive = 1;
-	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
+	size_t	i;
+
+	if (!dest || !src)
+		return (NULL);
+	if (dest == src || n == 0)
+		return (dest);
+	if (dest > src)
 	{
-		if (*nptr == '-')
-			positive = -positive;
-		nptr++;
+		i = n;
+		while (i > 0)
+		{
+			i--;
+			((unsigned char *)dest)[i] = ((const unsigned char *)src)[i];
+		}
 	}
-	while (*nptr >= '0' && *nptr <= '9')
+	else
 	{
-		numbre = (numbre * 10) + (*nptr - 48);
-		nptr++;
+		i = 0;
+		while (i < n)
+		{
+			((unsigned char *)dest)[i] = ((const unsigned char *)src)[i];
+			i++;
+		}
 	}
-	return (numbre * positive);
+	return (dest);
 }
