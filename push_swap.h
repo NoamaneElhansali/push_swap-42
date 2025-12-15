@@ -6,7 +6,7 @@
 /*   By: nelhansa <nelhansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:34:52 by nelhansa          #+#    #+#             */
-/*   Updated: 2025/12/15 04:02:37 by nelhansa         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:38:27 by nelhansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PUSH_SWAP_H
 
 # include <limits.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 
