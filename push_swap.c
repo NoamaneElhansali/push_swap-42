@@ -1,102 +1,59 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-int *ft_atoi_str(char *nptr,int count)
-{
-    int *arr_numbres;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nelhansa <nelhansa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/09 19:19:17 by nelhansa          #+#    #+#             */
+/*   Updated: 2025/12/15 03:56:53 by nelhansa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-    arr_numbres = malloc(count * sizeof(int));
-    int (numbre), (positive), (i);
-    i = 0;
-	while (*nptr)
-    {
-        numbre = 0;
-        positive = 1;
-        while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-            nptr++;
-        if (*nptr == '-' || *nptr == '+')
-        {
-            if (*nptr == '-')
-                positive = -positive;
-            nptr++;
-        }
-        while (*nptr >= '0' && *nptr <= '9')
-        {
-            numbre = (numbre * 10) + (*nptr - 48);
-            nptr++;
-        }
-        arr_numbres[i++] = numbre * positive;
-    }
+#include "push_swap.h"
+
+int	*ft_atoi_str(char **argv, int count_numbres)
+{
+	int	*arr_numbres;
+	int	i;
+
+	arr_numbres = malloc(count_numbres * sizeof(int));
+	if (!arr_numbres)
+		return (NULL);
+	i = 0;
+	while (*argv)
+	{
+		if (**argv == '\0' || !ft_atoi_u(argv, arr_numbres, &i))
+			return (free(arr_numbres), NULL);
+		argv++;
+	}
 	return (arr_numbres);
 }
 
-static int	ft_count_numbres(char *s)
+int	*ft_read_para(char **argv)
 {
-	int	is_numbre;
-	int	count;
+	int	count_numbres;
+	int	*numbres;
 
-	is_numbre = 0;
-	count = 0;
-	while (*s)
-	{
-        if (!((*s >= '0' && *s <= '9') || (*s == '+' || *s == '-') || (*s >= '\t' && *s <= '\r') || *s == ' '))
-            return (-1);
-		if (!((*s >= '\t' && *s <= '\r') || *s == ' ') && !is_numbre)
-		{
-			is_numbre = 1;
-			count++;
-		}
-		else if ((*s >= '\t' && *s <= '\r') || *s == ' ')
-            is_numbre = 0;
-		s++;
-	}
-	return (count);
+	count_numbres = ft_count_numbres(argv);
+	if (count_numbres < 0)
+		return (NULL);
+	numbres = ft_atoi_str(argv, count_numbres);
+	if (!numbres)
+		return (NULL);
+	if (ft_check_is_dup_numbres(numbres, count_numbres))
+		return (free(numbres), NULL);
+	return (numbres);
 }
-void	ft_putstr_fd(char *s, int fd)
+
+void	ft_select_algo(t_stack *a, t_stack *b)
 {
-	if (!s)
+	if (a->size == 1)
 		return ;
-	while (*s)
-		write(fd, s++, 1);
-}
-void ft_read_para(char **argv)
-{
-    int count_numbres, i;
-    int *numbres;
-    while (*argv)
-    {
-        count_numbres = ft_count_numbres(*argv);
-        if (count_numbres >= 0)
-        {
-            i = 0;
-            numbres = ft_atoi_str(*argv,count_numbres);
-            while (count_numbres > i)
-                printf("%d\n",numbres[i++]);
-            free(numbres);
-
-            
-        }
-        else
-        {
-            ft_putstr_fd("Error\n",2);
-        }
-        argv++;
-    }
-    
-}
-
-int main(int argc, char *argv[])
-{
-    
-    // if (argc > 2)
-    // {
-        ft_read_para(++argv);
-        // int count_numbre;
-        // count_numbre = ft_count_numbres("1 2a2 1   +1   5 55");
-        // if (count_numbre > 0)
-        //     printf("%d",count_numbre);
-        // else
-        //     write(2,"Error\n",7);
-    // }
-    return 0;
+	if (a->size == 2)
+		return (ft_sa(a));
+	if (a->size == 3)
+		return (sort_three(a));
+	else
+		ft_solve_element(a, b);
 }
